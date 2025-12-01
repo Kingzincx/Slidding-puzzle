@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="pt">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Sliding Puzzle Game</title>
+    <!-- Inclusão dos Arquivos CSS -->
+    <link rel="stylesheet" href="styles/general.css" />
+    <link rel="stylesheet" href="styles/background.css" />
+    <link rel="stylesheet" href="styles/menu.css" />
+    <link rel="stylesheet" href="styles/buttons.css" />
+    <link rel="stylesheet" href="styles/forms.css" />
+    <link rel="stylesheet" href="styles/gameplay.css" />
+    <link rel="stylesheet" href="styles/tiles.css" />
+    <link rel="stylesheet" href="styles/pause.css" />
+    <link rel="stylesheet" href="styles/victory.css" />
+    <link rel="stylesheet" href="styles/audio_settings.css" />
+  </head>
+  <body>
+    <!-- GIF de Fundo -->
+    <div id="background-gif"></div>
+
+    <!-- Música de Fundo -->
+    <audio id="game-music" loop>
+      <source src="audios/default_music.mp3" type="audio/mpeg" />
+      Seu navegador não suporta o elemento de áudio.
+    </audio>
+
+    <!-- Seções do Jogo -->
+    <!-- Menu Principal -->
+    <div id="main-menu" class="menu">
+      <h1>Sliding Puzzle Game</h1>
+      <button onclick="showSection('playMenu')">Jogar</button>
+      <button onclick="showSection('options')">Opções</button>
+      <button onclick="exitGame()">Sair</button>
+    </div>
+
+    <!-- Menu de Jogo -->
+    <div id="playMenu" class="menu" style="display: none">
+      <h1>Escolha uma opção</h1>
+      <button onclick="showSection('modeSelect')">Jogar como Convidado</button>
+      <button onclick="showSection('login')">Jogar com Conta Existente</button>
+      <button onclick="showSection('register')">Registrar</button>
+      <button onclick="showSection('ranking')">Ver Ranking</button>
+      <button onclick="showSection('main-menu')">Voltar</button>
+    </div>
+
+    <!-- Selecionar Modo de Jogo -->
+    <div id="modeSelect" class="menu" style="display: none">
+      <h1>Selecione o Modo de Jogo</h1>
+      <button onclick="selectDifficulty('classic')">Modo Clássico</button>
+      <button onclick="startGame('zen')">Modo Zen</button>
+      <button onclick="selectDifficulty('timed')">Modo Contra Relógio</button>
+      <button onclick="showSection('playMenu')">Voltar</button>
+    </div>
+
+    <!-- Selecionar Dificuldade -->
+    <div id="difficultySelect" class="menu" style="display: none">
+      <h1>Selecione a Dificuldade</h1>
+      <button onclick="startGame(currentMode, 'easy')">Fácil (3x3)</button>
+      <button onclick="startGame(currentMode, 'hard')">Difícil (6x6)</button>
+      <button onclick="showSection('modeSelect')">Voltar</button>
+    </div>
+
+    <!-- Login -->
+    <div id="login" class="form-container" style="display: none">
+      <h1>Login</h1>
+      <input
+        type="text"
+        id="login-username"
+        placeholder="Nome de utilizador"
+        required
+      />
+      <input
+        type="password"
+        id="login-password"
+        placeholder="Palavra-passe"
+        required
+      />
+      <button onclick="login()">Entrar</button>
+      <button onclick="showSection('playMenu')">Voltar</button>
+    </div>
+
+    <!-- Registrar -->
+    <div id="register" class="form-container" style="display: none">
+      <h1>Registrar</h1>
+      <input
+        type="text"
+        id="register-username"
+        placeholder="Nome de utilizador"
+        required
+      />
+      <input
+        type="password"
+        id="register-password"
+        placeholder="Palavra-passe"
+        required
+      />
+      <button onclick="register()">Registrar</button>
+      <button onclick="showSection('playMenu')">Voltar</button>
+    </div>
+
+    <!-- Ranking -->
+    <div id="ranking" class="ranking-container" style="display: none">
+      <h1>Ranking</h1>
+      <div id="rankingTable">
+        <!-- O ranking será carregado aqui -->
+      </div>
+      <button onclick="showSection('playMenu')">Voltar</button>
+    </div>
+
+    <!-- Opções -->
+    <div id="options" class="menu" style="display: none">
+      <h1>Opções</h1>
+      <h2>Mudar Tema</h2>
+      <button onclick="changeTheme('default')">Default</button>
+      <button onclick="changeTheme('anime')">Anime</button>
+      <button onclick="changeTheme('highschool')">Highschool</button>
+
+      <!-- Configurações de Áudio -->
+      <h2>Configurações de Áudio</h2>
+      <label for="music-volume">Volume da Música</label>
+      <input type="range" id="music-volume" min="0" max="100" value="80" />
+
+      <!-- Limpar Local Storage -->
+      <h2>Outras Opções</h2>
+      <button onclick="clearLocalStorage()">Limpar Dados</button>
+
+      <button onclick="showSection('main-menu')">Voltar</button>
+    </div>
+
+    <!-- Gameplay -->
+    <div id="game-container" class="game-container" style="display: none">
+      <div class="countdown" id="countdown">3</div>
+      <div class="game" id="game">
+        <!-- Blocos do puzzle serão gerados aqui -->
+      </div>
+      <div class="scoreboard">
+        <div id="timer-container">Tempo: <span id="timer">00:00</span></div>
+        <div id="score-container">Pontuação: <span id="score">1000</span></div>
+      </div>
+      <button id="pauseBtn" onclick="togglePause()">Pausar (P)</button>
+      <button id="solve-button" onclick="autoSolve()">Autoresolver</button>
+    </div>
+
+    <!-- Menu de Pausa -->
+    <div class="pause-menu" id="pauseMenu" style="display: none">
+      <h2>Jogo Pausado</h2>
+      <button onclick="resumeGame()">Retomar</button>
+      <button onclick="exitToMenu()">Voltar ao Menu</button>
+    </div>
+
+    <!-- Tela de Vitória -->
+    <div class="victory-screen" id="victoryScreen" style="display: none">
+      <h2 id="victoryMessage">Parabéns! Completaste o puzzle.</h2>
+      <p id="victoryStats"></p>
+      <button onclick="restartGame()">Jogar Novamente</button>
+      <button onclick="exitToMenu()">Voltar ao Menu</button>
+    </div>
+
+    <!-- Música de Vitória -->
+    <audio id="victory-music">
+      <!-- A fonte será definida dinamicamente no script -->
+    </audio>
+
+    <!-- Scripts -->
+    <script src="srcs/main.js"></script>
+    <script src="srcs/user.js"></script>
+    <script src="srcs/game_setup.js"></script>
+    <script src="srcs/puzzle.js"></script>
+    <script src="srcs/game_play.js"></script>
+    <script src="srcs/utilities.js"></script>
+    <script src="srcs/autosolve.js"></script>
+  </body>
+</html>

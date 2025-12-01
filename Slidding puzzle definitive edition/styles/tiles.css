@@ -1,0 +1,26 @@
+/* Blocos do Puzzle */
+.tile {
+    width: calc(80px / var(--puzzle-scale));
+    height: calc(80px / var(--puzzle-scale));
+    background-color: #303f9f;
+    color: #fff;
+    font-size: calc(2rem / var(--puzzle-scale));
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  .tile:hover {
+    background-color: #3f51b5;
+    transform: scale(1.05);
+  }
+  
+  .tile.empty {
+    background-color: transparent;
+    cursor: default;
+  }  

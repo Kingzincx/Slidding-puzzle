@@ -1,0 +1,24 @@
+/* Menu e títulos */
+.menu,
+.form-container,
+.ranking-container,
+.game-container,
+.pause-menu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  position: relative;
+}
+
+.menu h1,
+.form-container h1,
+.ranking-container h1,
+.game-container h1,
+.pause-menu h2 {
+  margin-bottom: 20px;
+  font-size: 3rem;
+  color: #ffffff;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+}

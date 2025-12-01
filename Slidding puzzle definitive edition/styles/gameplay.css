@@ -1,0 +1,34 @@
+/* Container do jogo */
+.game-container {
+    background: linear-gradient(145deg, #1e1e1e, #2c2c2c);
+    border-radius: 15px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    border: 5px solid #2196f3;
+    box-shadow: 0 0 20px #2196f3;
+    animation: neon-effect 2s infinite alternate;
+  }
+  
+  @keyframes neon-effect {
+    0% {
+      box-shadow: 0 0 10px #2196f3, 0 0 20px #2196f3, 0 0 30px #2196f3;
+    }
+    100% {
+      box-shadow: 0 0 20px #2196f3, 0 0 30px #2196f3, 0 0 40px #2196f3;
+    }
+  }
+  
+  .game {
+    display: grid;
+    gap: 10px;
+  }
+  
+  .scoreboard {
+    margin-top: 20px;
+    font-size: 1.2rem;
+    display: flex;
+    gap: 20px;
+  }  

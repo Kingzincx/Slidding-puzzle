@@ -1,0 +1,25 @@
+/* Configurações de áudio */
+#audio-settings {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    background: rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    display: none;
+    color: white;
+    z-index: 10;
+  }
+  
+  #audio-settings h2 {
+    margin-bottom: 15px;
+  }
+  
+  #audio-settings label {
+    display: block;
+    margin: 10px 0 5px;
+  }
+  
+  #audio-settings input[type="range"] {
+    width: 100%;
+  }  

@@ -1,0 +1,11 @@
+/* GIF de Fundo */
+#background-gif {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: url("../imagens/background.gif") center/cover no-repeat;
+    opacity: 0.3;
+    z-index: -1;
+  }

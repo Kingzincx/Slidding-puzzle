@@ -1,0 +1,18 @@
+/* Botões gerais */
+button {
+    padding: 15px 30px;
+    margin: 10px;
+    background-color: #2196f3;
+    color: #fff;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  }
+  
+  button:hover {
+    background-color: #1976d2;
+    transform: scale(1.05);
+  }  

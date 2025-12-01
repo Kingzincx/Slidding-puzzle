@@ -1,0 +1,30 @@
+/* Botão pausar */
+#pauseBtn {
+    margin-top: 20px;
+    background-color: #ff5722;
+  }
+  
+  #pauseBtn:hover {
+    background-color: #e64a19;
+  }
+  
+  /* Menu de pausa */
+  .pause-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(10, 10, 10, 0.95);
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+  }
+  
+  .pause-menu h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: #fff;
+  }  

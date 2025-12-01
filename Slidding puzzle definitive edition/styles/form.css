@@ -1,0 +1,8 @@
+/* Formulários */
+.form-container input {
+    padding: 10px;
+    margin: 5px;
+    width: 250px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }  
