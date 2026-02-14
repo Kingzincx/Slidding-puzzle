@@ -190,3 +190,11 @@ A\* is not practical for 6×6 (35-tile) puzzles in a browser. Instead, the solve
 - Buttons have clear labels and the game accepts keyboard interaction (`P` to pause) in addition to mouse clicks.
 
 ---
+
+## License
+
+The source code of this project is licensed under the MIT License.
+
+Audio tracks, images, and other media assets may be subject to different licenses or copyrights and are not included under the MIT License unless explicitly specified.
+
+---
