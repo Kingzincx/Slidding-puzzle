@@ -1,26 +1,50 @@
-/* Blocos do Puzzle */
+/* Puzzle tiles */
 .tile {
-    width: calc(80px / var(--puzzle-scale));
-    height: calc(80px / var(--puzzle-scale));
-    background-color: #303f9f;
-    color: #fff;
-    font-size: calc(2rem / var(--puzzle-scale));
-    font-weight: bold;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    border-radius: 10px;
-    transition: transform 0.3s ease, background-color 0.3s ease;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  }
-  
-  .tile:hover {
-    background-color: #3f51b5;
-    transform: scale(1.05);
-  }
-  
-  .tile.empty {
-    background-color: transparent;
-    cursor: default;
-  }  
+  width: calc(80px / var(--puzzle-scale));
+  height: calc(80px / var(--puzzle-scale));
+  background: var(--tile-bg);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #fff;
+  font-size: calc(2rem / var(--puzzle-scale));
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border-radius: 10px;
+  border: var(--tile-border);
+  box-shadow: var(--tile-shadow);
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+  user-select: none;
+}
+
+.tile:hover {
+  background: var(--tile-hover-bg);
+  box-shadow:
+    var(--tile-shadow),
+    0 0 12px var(--accent-glow);
+  transform: scale(1.04);
+}
+
+.tile:active {
+  transform: scale(0.96);
+}
+
+.tile.empty {
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border-color: transparent;
+  box-shadow: none;
+  cursor: default;
+}
+
+.tile.empty:hover {
+  background: transparent;
+  box-shadow: none;
+  transform: none;
+}

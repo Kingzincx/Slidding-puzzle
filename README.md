@@ -1,82 +1,166 @@
 # Sliding Puzzle – Definitive Edition
 
-  Versão web de um clássico puzzle deslizante (8/35 peças) construída apenas com HTML5, CSS3 e JavaScript Vanilla. Inclui múltiplos modos de jogo, mudança
-  de temas, música ambiente, ranking local e até um autoresolvedor baseado no algoritmo A*.
+A web-based sliding puzzle (8/35 pieces) built purely with HTML5, CSS3 and Vanilla JavaScript. Features multiple game modes, dynamic themes, ambient music, a local leaderboard, a beat-synced user circle inspired by **osu!**, and a fully refactored auto-solver backed by A\* with bitpacked state.
 
-  ## Funcionalidades principais
+> **Scope note:** This project was made as a personal exercise to practise HTML, CSS and JavaScript. It was never intended to be a production application, so aspects like input sanitisation, authentication security or data encryption were deliberately left out of scope.
 
-  - Menus animados com mudança dinâmica de secções (`index.html` + `srcs/main.js`).
-  - Modo Clássico, Zen e Contra Relógio, cada um com regras, pontuação e música próprios.
-  - Seleção de dificuldade 3x3 ou 6x6 (exceto Zen) e contagem decrescente antes do início da partida.
-  - Sistema de contas local (registo/login) com persistência em `localStorage` e ranking ordenado por pontuação/tempo (`srcs/user.js`).
-  - Três temas completos (default, anime, highschool) que alteram fundos, músicas de jogo e músicas de vitória.
-  - Controlo de áudio com slider de volume, botão de pausa e atalho `P`, e reinício rápido do puzzle.
-  - Autoresolvedor 3x3 com animação dos passos, suportado por A* e heurística de distância de Manhattan (`srcs/autosolve.js`).
-  - Interface responsiva com estilos separados (`styles/*.css`) para facilitar personalização.
+---
 
-  ## Estrutura do projeto
-  .
-  ├── index.html
-  ├── audios/              # Trilhas de jogo e vitória por tema + playlist Zen
-  ├── imagens/             # GIFs de fundo para cada tema
-  ├── styles/              # CSS modular (menu, jogo, tiles, áudio, etc.)
-  ├── srcs/
-  │   ├── main.js          # Gestão de estado global e temas
-  │   ├── user.js          # Registo/login, ranking e storage
-  │   ├── game_setup.js    # Seleção de modo/dificuldade e arranque do jogo
-  │   ├── puzzle.js        # Geração, renderização e validação do puzzle
-  │   ├── game_play.js     # Movimentos, pontuação, vitória e timers
-  │   ├── utilities.js     # Funções utilitárias (formatos, pausa, saída)
-  │   └── autosolve.js     # Autoresolvedor A*, modo Zen e helpers
-  └── docs/README.docx     # Documento original em processamento de texto
+## Features
 
+- Animated menus with dynamic section switching (`index.html` + `srcs/main.js`).
+- Classic, Zen and Time Attack modes, each with their own rules, scoring and music.
+- 3×3 or 6×6 difficulty selection (except Zen) and a countdown before the puzzle starts.
+- Local account system (register/login) persisted in `localStorage` with a leaderboard sorted by score and time (`srcs/user.js`).
+- Three complete themes (`default`, `anime`, `highschool`) that swap backgrounds, game music and victory music.
+- Audio controls: volume slider, pause button, `P` keyboard shortcut and quick puzzle restart.
+- **Beat-synced user circle** – pulses to the music in real time using the Web Audio API, inspired by the osu! logo effect (`srcs/beat_sync.js`).
+- **Refactored auto-solver** – supports both 3×3 (A\* with bitpacked state) and 6×6 (reverse move history), split across a dedicated `srcs/solve/` module.
+- Responsive interface with separate stylesheets (`styles/*.css`) for easy customisation.
 
-  ## Como executar
+---
 
-  1. Garante que tens um navegador moderno (Chrome, Edge, Firefox ou similar).
-  2. Faz download/clona o repositório e mantém a estrutura de pastas.
-  3. Abre `index.html` diretamente no navegador (duplo clique ou `Open File`).
-  4. Autoriza o uso de áudio se o navegador solicitar.
+## Project structure
 
-  > Não há dependências externas nem servidor – tudo corre no lado do cliente.
+```
+.
+├── index.html
+├── audios/              # Game and victory tracks per theme + Zen playlist
+├── imagens/             # Background GIFs for each theme
+├── styles/              # Modular CSS (menu, game, tiles, audio, user-circle, etc.)
+├── srcs/
+│   ├── main.js          # Global state management and themes
+│   ├── user.js          # Register/login, leaderboard and storage
+│   ├── game_setup.js    # Mode/difficulty selection and game start
+│   ├── puzzle.js        # Puzzle generation, rendering and validation
+│   ├── game_play.js     # Moves, scoring, victory and timers
+│   ├── utilities.js     # Utility functions (formats, pause, exit)
+│   ├── beat_sync.js     # Beat detection and user-circle animation
+│   └── solve/
+│       ├── state_codec.js        # Bitpacking encode/decode helpers
+│       ├── heuristics.js         # Manhattan + Linear Conflict heuristic
+│       ├── min_heap.js           # Binary min-heap for the A* open set
+│       ├── solver_3x3.js         # A* solver for 3×3 puzzles
+│       ├── solver_6x6.js         # Reverse-history solver for 6×6 puzzles
+│       ├── auto_solve_runtime.js # Orchestrator + step animation
+│       └── audio_score.js        # Zen music playback and score helpers
+└── docs/README.docx     # Original document
+```
 
-  ## Como jogar
+---
 
-  1. **Menu Principal**: escolhe Jogar, Opções ou Sair.
-  2. **Jogar**: decide se queres jogar como convidado, iniciar sessão ou registar nova conta.
-  3. **Modo/Dificuldade**:
-     - Clássico ou Contra Relógio: seleciona entre 3x3 (fácil) e 6x6 (difícil).
-     - Zen: arranca diretamente num loop infinito 3x3 sem pontuação.
-  4. **Countdown**: aguarda a contagem de 3 segundos antes do puzzle ser apresentado.
-  5. **Movimentos**: clica numa peça adjacente ao espaço vazio para a mover. No clássico cada movimento reduz 10 pontos, no Zen não há pontuação e no Contra
-  Relógio tens 2m50s para completar o máximo de puzzles.
-  6. **Pausa/Retomar**: usa o botão Pausar ou a tecla `P`. O menu de pausa permite retomar ou voltar ao menu inicial.
-  7. **Autoresolvedor**: no modo 3x3 pressiona o botão “Autoresolver” para ver a solução animada.
-  8. **Vitória**: observa as estatísticas (tempo, pontuação ou nº de puzzles) e decide se queres recomeçar ou regressar ao menu.
+## How to run
 
-  ## Modos de jogo
+1. Make sure you have a modern browser (Chrome, Edge, Firefox or similar).
+2. Download/clone the repository and keep the folder structure intact.
+3. Open `index.html` directly in the browser (double-click or *Open File*).
+4. Allow audio if the browser requests permission.
 
-  - **Modo Clássico**: foco em eficiência; o objetivo é terminar com a melhor pontuação possível. Ideal para competir no ranking.
-  - **Modo Zen**: sem cronómetro nem pontuação; após completar um puzzle, outro é gerado automaticamente enquanto a playlist zen continua em loop.
-  - **Modo Contra Relógio**: cronómetro regressivo de 170 segundos. Conta quantos puzzles completas antes de o tempo expirar.
+> No external dependencies and no server required – everything runs client-side.
 
-  ## Sistema de contas e ranking
+---
 
-  - Todos os dados residem em `localStorage`, pelo que permanecem apenas no navegador do utilizador.
-  - O registo guarda `username`, `password` (texto simples para fins académicos/demonstração), `highScore` e `time`.
-  - O ranking ignora o tema e o convidado, ordenando pela maior pontuação e, em caso de empate, pelo menor tempo. No modo Contra Relógio regista-se o número
-  de puzzles completos.
+## How to play
 
-  ## Temas, áudio e acessibilidade
+1. **Main Menu**: choose Play, Options or Exit.
+2. **Play**: decide whether to play as a guest, sign in or create a new account.
+3. **Mode/Difficulty**:
+   - Classic or Time Attack: choose between 3×3 (easy) and 6×6 (hard).
+   - Zen: starts immediately in an infinite 3×3 loop with no scoring.
+4. **Countdown**: wait 3 seconds before the puzzle is shown.
+5. **Moves**: click a tile adjacent to the empty space to move it. In Classic each move costs 10 points; in Zen there is no score; in Time Attack you have 2 m 50 s to complete as many puzzles as possible.
+6. **Pause/Resume**: use the Pause button or the `P` key. The pause menu lets you resume or return to the main menu.
+7. **Auto-solver**: press the "Auto-solve" button to watch an animated solution.
+8. **Victory**: view your stats (time, score or number of puzzles) and choose to restart or go back to the menu.
 
-  - Temas disponíveis: `default`, `anime`, `highschool`. Alteram o GIF de fundo, a música principal e a música de vitória.
-  - Slider de volume controla tanto a música de fundo como a playlist Zen; o valor é guardado entre sessões.
-  - Botão “Limpar Dados” apaga todo o conteúdo de `localStorage` (temas, contas e ranking).
-  - Os botões possuem etiquetas claras e o jogo aceita interações por teclado (atalho de pausa) além do rato.
+---
 
-  ## Autoresolvedor
+## Game modes
 
-  - Disponível apenas para puzzles 3x3 para garantir boa performance.
-  - Implementação com algoritmo A* (`srcs/autosolve.js`), heurística de Manhattan e reconstrução do caminho para animar os movimentos.
-  - Útil para estudo de algoritmos ou para desbloquear puzzles impossíveis gerados manualmente.
-  ---
+| Mode | Objective | Scoring |
+|---|---|---|
+| **Classic** | Finish with the best possible score | −10 points per move |
+| **Zen** | Relax – a new puzzle is generated automatically after each solve | None |
+| **Time Attack** | Complete as many puzzles as possible in 170 seconds | Puzzle count |
+
+---
+
+## Beat Circle (osu! inspired)
+
+The user avatar circle visible during gameplay pulses in sync with the background music, replicating the pulsation effect of the **osu!** logo.
+
+### How it works (`srcs/beat_sync.js`)
+
+1. On the first user gesture, a `Web Audio API` `AudioContext` is created and the `<audio>` element is connected through an `AnalyserNode` (FFT size 2048).
+2. Every frame (via `requestAnimationFrame`) the module reads:
+   - **Bass energy** – the average amplitude of frequency bins 0–6 (~0–150 Hz), normalised to 0–1.
+   - **Spectral flux** – the sum of all positive bin-level differences between the current and previous frame.
+3. A rolling history of the last ~43 flux samples (~0.7 s at 60 fps) is maintained. A **beat** is detected when the current flux exceeds 1.5× the rolling average and the minimum cooldown (200 ms) has elapsed.
+4. On a beat, the circle is slightly compressed (`scale < 1`) for ~60 ms and then eased back to normal. Between beats a gentle *breathing* effect driven by bass energy keeps the circle subtly alive.
+5. A CSS ripple element expands and fades out on every beat, reinforcing the hit-circle feel.
+
+---
+
+## Auto-solver & Bitmasking
+
+![Auto-solver demo](Slidding%20puzzle%20definitive%20edition/imagens/demo.gif)
+
+The solver was fully rewritten and split into a dedicated `srcs/solve/` module. It now supports both puzzle sizes.
+
+### Bitpacked state (`srcs/solve/state_codec.js`)
+
+To make the A\* open-set lookups as fast as possible, each puzzle state is encoded into a single **JavaScript `BigInt`** instead of an array or string.
+
+- `bitsPerTile = ⌈log₂(totalTiles)⌉` – the minimum number of bits needed to represent any tile value.
+- Tile at position `i` is stored at bit offset `i × bitsPerTile`.
+- A pre-computed `tileMask = (1n << bitsPerTile) - 1n` isolates a single tile.
+
+Example for a 3×3 puzzle (9 tiles, values 0–8 → 4 bits each):
+
+```
+state = [1, 2, 3, 4, 5, 6, 7, 8, null]
+packed = 0001 0010 0011 0100 0101 0110 0111 1000 0000
+         tile0  tile1  tile2  ...                tile8(=0)
+```
+
+**Key operations:**
+
+```js
+// Read tile at position i
+getPackedTile(packed, i, ctx)  →  Number((packed >> shifts[i]) & tileMask)
+
+// Swap two tiles (e.g. move a piece into the empty slot)
+swapPackedTiles(packed, a, b, ctx)
+  // clears both slots with ~(tileMask << shift), then writes each tile into the other slot
+```
+
+Using `BigInt` bitwise ops means state comparisons and copies are O(1) and dictionary (Map) lookups use value equality automatically.
+
+### 3×3 solver – A\* (`srcs/solve/solver_3x3.js`)
+
+- **Open set**: custom binary min-heap (`srcs/solve/min_heap.js`) keyed on `f = g + h`.
+- **Heuristic** (`srcs/solve/heuristics.js`): **Manhattan Distance + Linear Conflict**. Linear conflict adds +2 for every pair of tiles that are in their goal row/column but in the wrong order, making the heuristic admissible and stronger than plain Manhattan distance alone.
+- States are stored as `BigInt` in a `Map<BigInt, g>` to avoid revisiting worse paths.
+
+### 6×6 solver – Reverse history (`srcs/solve/solver_6x6.js`)
+
+A\* is not practical for 6×6 (35-tile) puzzles in a browser. Instead, the solver replays the player's own move history in reverse order, which guarantees an optimal undo-path without any search overhead.
+
+---
+
+## Accounts and leaderboard
+
+- All data lives in `localStorage` and stays in the user's browser only.
+- Registration stores `username`, `password` (plain text – this is an academic/demo project), `highScore` and `time`.
+- The leaderboard ignores theme and guests, sorted by highest score; ties broken by lowest time. In Time Attack mode the puzzle count is recorded instead.
+
+---
+
+## Themes, audio and accessibility
+
+- Available themes: `default`, `anime`, `highschool`. They swap the background GIF, the main music and the victory music.
+- The volume slider controls both the background music and the Zen playlist; the value is saved between sessions.
+- The "Clear Data" button wipes all `localStorage` content (themes, accounts and leaderboard).
+- Buttons have clear labels and the game accepts keyboard interaction (`P` to pause) in addition to mouse clicks.
+
+---

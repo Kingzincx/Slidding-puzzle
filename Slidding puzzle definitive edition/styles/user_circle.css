@@ -1,0 +1,113 @@
+/* User Circle Container */
+#user-circle-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* User Circle */
+#user-circle {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: var(--btn-gradient);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow:
+    0 0 15px var(--accent-glow),
+    0 0 30px rgba(0, 0, 0, 0.3);
+  transition: box-shadow 0.3s ease;
+  position: relative;
+  z-index: 2;
+  user-select: none;
+}
+
+#user-circle:hover {
+  box-shadow:
+    0 0 20px var(--accent-glow-strong),
+    0 0 40px var(--accent-glow);
+}
+
+/* User Circle Text */
+#user-circle-text {
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+  pointer-events: none;
+}
+
+/* Ripple Effect */
+#user-circle-ripple {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 2px solid var(--accent-primary);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1;
+  transform-origin: center center;
+}
+
+/* Dropdown Menu */
+#user-dropdown {
+  margin-top: 10px;
+  background: var(--bg-surface);
+  border: 1px solid var(--surface-border);
+  border-radius: 10px;
+  padding: 15px;
+  min-width: 180px;
+  backdrop-filter: blur(var(--surface-blur));
+  -webkit-backdrop-filter: blur(var(--surface-blur));
+  box-shadow: var(--shadow-elevated);
+}
+
+#user-dropdown .dropdown-username {
+  font-size: 1rem;
+  font-weight: bold;
+  color: var(--accent-primary);
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+#user-dropdown .dropdown-score {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+#user-dropdown button {
+  display: block;
+  width: 100%;
+  padding: 10px 15px;
+  margin: 5px 0;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  border: 1px solid var(--surface-border);
+  border-radius: 8px;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+  box-shadow: none;
+}
+
+#user-dropdown button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: scale(1.02);
+}
+
+#user-dropdown button::after {
+  display: none;
+}

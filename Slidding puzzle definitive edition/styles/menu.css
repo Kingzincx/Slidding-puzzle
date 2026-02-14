@@ -1,4 +1,4 @@
-/* Menu e títulos */
+/* Menu and headings */
 .menu,
 .form-container,
 .ranking-container,
@@ -15,10 +15,136 @@
 .menu h1,
 .form-container h1,
 .ranking-container h1,
-.game-container h1,
-.pause-menu h2 {
+.game-container h1 {
   margin-bottom: 20px;
   font-size: 3rem;
-  color: #ffffff;
-  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+  font-weight: 300;
+  color: var(--text-primary);
+  text-shadow:
+    0 0 20px var(--accent-glow),
+    0 0 40px var(--accent-glow);
+  letter-spacing: 2px;
+}
+
+.menu h2,
+.form-container h2,
+.ranking-container h2 {
+  margin-bottom: 12px;
+  font-size: 1.4rem;
+  font-weight: 400;
+  color: var(--text-secondary);
+  letter-spacing: 1px;
+}
+
+/* ===== Section entrance animations ===== */
+@keyframes sectionFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes elementSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.section-enter {
+  animation: sectionFadeIn var(--entrance-duration) ease-out;
+}
+
+.section-enter h1 {
+  animation: elementSlideIn var(--entrance-duration) ease-out;
+}
+
+.section-enter h2 {
+  animation: elementSlideIn var(--entrance-duration) ease-out;
+  animation-delay: var(--entrance-stagger);
+  animation-fill-mode: both;
+}
+
+.section-enter button:nth-child(1) {
+  animation: elementSlideIn var(--entrance-duration) ease-out;
+  animation-delay: calc(var(--entrance-stagger) * 2);
+  animation-fill-mode: both;
+}
+.section-enter button:nth-child(2) {
+  animation: elementSlideIn var(--entrance-duration) ease-out;
+  animation-delay: calc(var(--entrance-stagger) * 3);
+  animation-fill-mode: both;
+}
+.section-enter button:nth-child(3) {
+  animation: elementSlideIn var(--entrance-duration) ease-out;
+  animation-delay: calc(var(--entrance-stagger) * 4);
+  animation-fill-mode: both;
+}
+.section-enter button:nth-child(4) {
+  animation: elementSlideIn var(--entrance-duration) ease-out;
+  animation-delay: calc(var(--entrance-stagger) * 5);
+  animation-fill-mode: both;
+}
+.section-enter button:nth-child(5) {
+  animation: elementSlideIn var(--entrance-duration) ease-out;
+  animation-delay: calc(var(--entrance-stagger) * 6);
+  animation-fill-mode: both;
+}
+.section-enter button:nth-child(6) {
+  animation: elementSlideIn var(--entrance-duration) ease-out;
+  animation-delay: calc(var(--entrance-stagger) * 7);
+  animation-fill-mode: both;
+}
+
+.section-enter input:nth-of-type(1) {
+  animation: elementSlideIn var(--entrance-duration) ease-out;
+  animation-delay: calc(var(--entrance-stagger) * 2);
+  animation-fill-mode: both;
+}
+.section-enter input:nth-of-type(2) {
+  animation: elementSlideIn var(--entrance-duration) ease-out;
+  animation-delay: calc(var(--entrance-stagger) * 3);
+  animation-fill-mode: both;
+}
+
+/* ===== Ranking table ===== */
+#rankingTable {
+  width: 100%;
+  max-width: 500px;
+  margin-bottom: 20px;
+}
+
+#rankingTable table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#rankingTable th {
+  color: var(--accent-primary);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--surface-border);
+  text-align: left;
+}
+
+#rankingTable td {
+  color: var(--text-secondary);
+  padding: 8px 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  font-size: 0.95rem;
+}
+
+#rankingTable tr:first-child td {
+  color: var(--accent-primary);
+  font-weight: 600;
+  text-shadow: 0 0 8px var(--accent-glow);
 }

@@ -1,18 +1,62 @@
-/* Botões gerais */
+/* General buttons */
 button {
-    padding: 15px 30px;
-    margin: 10px;
-    background-color: #2196f3;
-    color: #fff;
-    font-size: 1.2rem;
-    border: none;
-    border-radius: 30px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-  }
-  
-  button:hover {
-    background-color: #1976d2;
-    transform: scale(1.05);
-  }  
+  padding: 15px 30px;
+  margin: 10px;
+  background: var(--btn-gradient);
+  color: #fff;
+  font-family: var(--font-main);
+  font-size: 1.2rem;
+  font-weight: 500;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    filter 0.2s ease,
+    box-shadow 0.2s ease;
+  box-shadow:
+    0 4px 15px rgba(0, 0, 0, 0.3),
+    0 0 10px var(--accent-glow);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Shimmer pseudo-element */
+button::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.5s ease;
+  pointer-events: none;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.15);
+  box-shadow:
+    0 6px 20px rgba(0, 0, 0, 0.4),
+    0 0 20px var(--accent-glow-strong);
+}
+
+button:hover::after {
+  left: 100%;
+}
+
+button:active {
+  transform: scale(0.97);
+  filter: brightness(0.95);
+}
+
+button:focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 3px;
+}

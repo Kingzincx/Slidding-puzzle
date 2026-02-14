@@ -1,34 +1,70 @@
-/* Container do jogo */
+/* Game container */
 .game-container {
-    background: linear-gradient(145deg, #1e1e1e, #2c2c2c);
-    border-radius: 15px;
-    padding: 30px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: relative;
-    border: 5px solid #2196f3;
-    box-shadow: 0 0 20px #2196f3;
-    animation: neon-effect 2s infinite alternate;
+  background: var(--bg-surface);
+  backdrop-filter: blur(var(--surface-blur));
+  -webkit-backdrop-filter: blur(var(--surface-blur));
+  border-radius: 15px;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  border: 1px solid var(--surface-border);
+  box-shadow: 0 0 20px var(--accent-glow);
+  animation: gameGlow 2s infinite alternate;
+}
+
+@keyframes gameGlow {
+  0% {
+    box-shadow:
+      0 0 10px var(--accent-glow),
+      0 0 20px var(--accent-glow);
   }
-  
-  @keyframes neon-effect {
-    0% {
-      box-shadow: 0 0 10px #2196f3, 0 0 20px #2196f3, 0 0 30px #2196f3;
-    }
-    100% {
-      box-shadow: 0 0 20px #2196f3, 0 0 30px #2196f3, 0 0 40px #2196f3;
-    }
+  100% {
+    box-shadow:
+      0 0 20px var(--accent-glow),
+      0 0 30px var(--accent-glow-strong);
   }
-  
-  .game {
-    display: grid;
-    gap: 10px;
+}
+
+.game {
+  display: grid;
+  gap: 6px;
+}
+
+.scoreboard {
+  margin-top: 20px;
+  font-family: var(--score-font);
+  font-size: 1.2rem;
+  display: flex;
+  gap: 20px;
+  color: var(--text-secondary);
+}
+
+.scoreboard span {
+  color: var(--accent-primary);
+  font-weight: 600;
+}
+
+/* Countdown */
+.countdown {
+  font-size: 5rem;
+  font-weight: 200;
+  color: var(--accent-primary);
+  text-shadow:
+    0 0 30px var(--accent-glow-strong),
+    0 0 60px var(--accent-glow);
+  animation: countdownPulse 1s ease-in-out infinite;
+}
+
+@keyframes countdownPulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
   }
-  
-  .scoreboard {
-    margin-top: 20px;
-    font-size: 1.2rem;
-    display: flex;
-    gap: 20px;
-  }  
+  50% {
+    transform: scale(1.15);
+    opacity: 0.7;
+  }
+}

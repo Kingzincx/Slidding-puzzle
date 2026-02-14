@@ -1,44 +1,46 @@
 /**
- * Limpa todos os dados do localStorage.
+ * Clears all localStorage data.
  */
 function clearLocalStorage() {
   if (
     confirm(
-      "Tem a certeza de que deseja apagar todos os dados? Esta ação não pode ser desfeita."
+      "Are you sure you want to delete all data? This action cannot be undone.",
     )
   ) {
     localStorage.clear();
-    alert("Todos os dados foram apagados.");
-    currentUser = "Convidado";
+    alert("All data has been deleted.");
+    currentUser = "Guest";
+    updateUserCircle();
   }
 }
 
 /**
- * Registra um novo utilizador salvando seus dados no localStorage.
+ * Registers a new user by saving their data in localStorage.
  */
 function register() {
   let username = document.getElementById("register-username").value.trim();
   let password = document.getElementById("register-password").value;
 
   if (!username || !password) {
-    alert("Por favor, preencha todos os campos.");
+    alert("Please fill in all fields.");
     return;
   }
 
   if (localStorage.getItem(username)) {
-    alert("Nome de usuário já existe. Por favor, escolha outro.");
+    alert("Username already exists. Please choose another.");
   } else {
     localStorage.setItem(
       username,
-      JSON.stringify({ password: password, highScore: 0, time: 0 })
+      JSON.stringify({ password: password, highScore: 0, time: 0 }),
     );
-    alert("Registro bem-sucedido! Você já pode fazer login.");
+    alert("Registration successful! You can now log in.");
+    updateUserCircle();
     showSection("login");
   }
 }
 
 /**
- * Realiza o login de um utilizador existente.
+ * Logs in an existing user.
  */
 function login() {
   let username = document.getElementById("login-username").value.trim();
@@ -50,23 +52,24 @@ function login() {
     if (userObj.password === password) {
       currentUser = username;
       localStorage.setItem("currentUser", currentUser);
-      alert(`Bem-vindo, ${currentUser}!`);
-      showSection("modeSelect");
+      alert(`Welcome, ${currentUser}!`);
+      updateUserCircle();
+      showSection("main-menu");
     } else {
-      alert("Senha incorreta. Tente novamente.");
+      alert("Incorrect password. Please try again.");
     }
   } else {
-    alert("Utilizador não encontrado. Por favor, registre-se.");
+    alert("User not found. Please register.");
   }
 }
 
 /**
- * Atualiza o ranking do jogador no localStorage.
- * @param {number} score - A pontuação atual do jogador.
- * @param {number} time - O tempo gasto pelo jogador.
+ * Updates the player's leaderboard data in localStorage.
+ * @param {number} score - The player's current score.
+ * @param {number} time - Time spent by the player.
  */
 function updateRanking(score, time) {
-  if (currentUser === "Convidado") return;
+  if (currentUser === "Guest") return;
   if (currentMode === "timed") return;
 
   let userData = JSON.parse(localStorage.getItem(currentUser));
@@ -83,7 +86,7 @@ function updateRanking(score, time) {
 }
 
 /**
- * Carrega e exibe o ranking dos jogadores.
+ * Loads and displays the players leaderboard.
  */
 function loadRanking() {
   let rankingTable = document.getElementById("rankingTable");
@@ -91,7 +94,7 @@ function loadRanking() {
   let table = document.createElement("table");
   let headerRow = document.createElement("tr");
   headerRow.innerHTML =
-    "<th>Posição</th><th>Jogador</th><th>Pontuação</th><th>Tempo</th>";
+    "<th>Rank</th><th>Player</th><th>Score</th><th>Time</th>";
   table.appendChild(headerRow);
 
   let users = [];
@@ -110,9 +113,9 @@ function loadRanking() {
 
   users.sort((a, b) => {
     if (b.highScore !== a.highScore) {
-      return b.highScore - a.highScore; // Pontuação decrescente
+      return b.highScore - a.highScore; // Score descending
     } else {
-      return a.time - b.time; // Tempo crescente
+      return a.time - b.time; // Time ascending
     }
   });
 
@@ -134,4 +137,67 @@ function loadRanking() {
   });
 
   rankingTable.appendChild(table);
+}
+
+/**
+ * Updates the user circle and dropdown content.
+ */
+function updateUserCircle() {
+  let circleText = document.getElementById("user-circle-text");
+  let dropdown = document.getElementById("user-dropdown");
+  if (!circleText || !dropdown) return;
+
+  if (currentUser === "Guest") {
+    circleText.innerText = "?";
+    dropdown.innerHTML =
+      "<button onclick=\"showSection('login'); toggleUserMenu()\">Login</button>" +
+      "<button onclick=\"showSection('register'); toggleUserMenu()\">Register</button>" +
+      "<button onclick=\"showSection('ranking'); toggleUserMenu()\">Leaderboard</button>";
+  } else {
+    circleText.innerText = currentUser.charAt(0).toUpperCase();
+
+    let highScore = 0;
+    let userData = localStorage.getItem(currentUser);
+    if (userData) {
+      let userObj = JSON.parse(userData);
+      highScore = userObj.highScore || 0;
+    }
+
+    dropdown.innerHTML =
+      '<div class="dropdown-username">' +
+      currentUser +
+      "</div>" +
+      '<div class="dropdown-score">High Score: ' +
+      highScore +
+      "</div>" +
+      "<button onclick=\"showSection('ranking'); toggleUserMenu()\">Leaderboard</button>" +
+      '<button onclick="logoutUser()">Log Out</button>';
+  }
+}
+
+/**
+ * Toggles the user dropdown visibility.
+ */
+function toggleUserMenu() {
+  let dropdown = document.getElementById("user-dropdown");
+  if (!dropdown) return;
+
+  if (dropdown.style.display === "none" || dropdown.style.display === "") {
+    updateUserCircle();
+    dropdown.style.display = "block";
+  } else {
+    dropdown.style.display = "none";
+  }
+}
+
+/**
+ * Logs out the user.
+ */
+function logoutUser() {
+  currentUser = "Guest";
+  localStorage.removeItem("currentUser");
+  updateUserCircle();
+  let dropdown = document.getElementById("user-dropdown");
+  if (dropdown) dropdown.style.display = "none";
+  showSection("main-menu");
 }

@@ -1,19 +1,110 @@
-/* Estilos gerais */
+/* General styles */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  body {
-    font-family: "Arial", sans-serif;
-    background-color: #0a0a0a;
-    color: white;
-    overflow: hidden;
-    position: relative;
-  }
-  
-  /* Variáveis CSS */
-  :root {
-    --puzzle-scale: 1;
-  }
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ===== CSS Variables — Default Theme (Neon Cyberpunk) ===== */
+:root {
+  --puzzle-scale: 1;
+
+  /* Colors */
+  --accent-primary: #00f0ff;
+  --accent-secondary: #7b2fff;
+  --bg-primary: #050510;
+  --bg-surface: rgba(10, 10, 30, 0.85);
+  --bg-overlay: rgba(5, 5, 16, 0.75);
+  --surface-border: rgba(0, 240, 255, 0.15);
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.6);
+
+  /* Glows & Shadows */
+  --accent-glow: rgba(0, 240, 255, 0.4);
+  --accent-glow-strong: rgba(0, 240, 255, 0.6);
+  --shadow-elevated: 0 8px 32px rgba(0, 0, 0, 0.4);
+
+  /* Gradients */
+  --btn-gradient: linear-gradient(135deg, #00f0ff, #7b2fff);
+  --btn-gradient-hover: linear-gradient(135deg, #33f4ff, #9b5fff);
+
+  /* Surface */
+  --surface-blur: 12px;
+
+  /* Tiles */
+  --tile-bg: rgba(0, 240, 255, 0.1);
+  --tile-hover-bg: rgba(0, 240, 255, 0.2);
+  --tile-border: 1px solid rgba(0, 240, 255, 0.25);
+  --tile-shadow:
+    0 2px 8px rgba(0, 240, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+
+  /* Pause button */
+  --pause-bg: #ff5722;
+  --pause-bg-hover: #e64a19;
+
+  /* Typography */
+  --font-main: "Bahnschrift", "Segoe UI", system-ui, sans-serif;
+  --score-font: "Consolas", "Courier New", monospace;
+
+  /* Animation */
+  --entrance-duration: 0.5s;
+  --entrance-stagger: 0.07s;
+}
+
+/* ===== Anime Theme (Sakura) ===== */
+body.theme-anime {
+  --accent-primary: #ff6b9d;
+  --accent-secondary: #c084fc;
+  --bg-primary: #1a0a20;
+  --bg-surface: rgba(40, 15, 50, 0.85);
+  --bg-overlay: rgba(26, 10, 32, 0.75);
+  --surface-border: rgba(255, 107, 157, 0.15);
+
+  --accent-glow: rgba(255, 107, 157, 0.4);
+  --accent-glow-strong: rgba(255, 107, 157, 0.6);
+
+  --btn-gradient: linear-gradient(135deg, #ff6b9d, #c084fc);
+  --btn-gradient-hover: linear-gradient(135deg, #ff8db5, #d0a0ff);
+
+  --tile-bg: rgba(255, 107, 157, 0.1);
+  --tile-hover-bg: rgba(255, 107, 157, 0.2);
+  --tile-border: 1px solid rgba(255, 107, 157, 0.25);
+  --tile-shadow:
+    0 2px 8px rgba(255, 107, 157, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+
+  --pause-bg: #c084fc;
+  --pause-bg-hover: #a855f7;
+}
+
+/* ===== Highschool Theme (Varsity) ===== */
+body.theme-highschool {
+  --accent-primary: #ffc107;
+  --accent-secondary: #ff5252;
+  --bg-primary: #0f1a0f;
+  --bg-surface: rgba(20, 35, 20, 0.85);
+  --bg-overlay: rgba(15, 26, 15, 0.75);
+  --surface-border: rgba(255, 193, 7, 0.15);
+
+  --accent-glow: rgba(255, 193, 7, 0.4);
+  --accent-glow-strong: rgba(255, 193, 7, 0.6);
+
+  --btn-gradient: linear-gradient(135deg, #ffc107, #ff5252);
+  --btn-gradient-hover: linear-gradient(135deg, #ffcd38, #ff7474);
+
+  --tile-bg: rgba(255, 193, 7, 0.1);
+  --tile-hover-bg: rgba(255, 193, 7, 0.2);
+  --tile-border: 1px solid rgba(255, 193, 7, 0.25);
+  --tile-shadow:
+    0 2px 8px rgba(255, 193, 7, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+
+  --pause-bg: #ff5252;
+  --pause-bg-hover: #e04343;
+}
+
+body {
+  font-family: var(--font-main);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  overflow: hidden;
+  position: relative;
+}
