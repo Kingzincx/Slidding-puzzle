@@ -25,26 +25,52 @@ A web-based sliding puzzle (8/35 pieces) built purely with HTML5, CSS3 and Vanil
 ```
 .
 ├── index.html
-├── audios/              # Game and victory tracks per theme + Zen playlist
-├── imagens/             # Background GIFs for each theme
-├── styles/              # Modular CSS (menu, game, tiles, audio, user-circle, etc.)
+├── README.md
+├── .github/
+│   └── workflows/
+│       └── static.yml           # GitHub Pages deployment workflow
+├── audios/
+│   ├── default_music.mp3        # Default theme background music
+│   ├── default_victory.mp3      # Default theme victory music
+│   ├── default_click.MP3        # Tile click sound effect
+│   ├── anime_music.mp3          # Anime theme background music
+│   ├── anime_victory.mp3        # Anime theme victory music
+│   ├── highschool_music.mp3     # Highschool theme background music
+│   ├── highschool_victory.mp3   # Highschool theme victory music
+│   └── zen1.mp3                 # Zen mode music (looped)
+├── imagens/
+│   ├── default_background.gif   # Default theme background
+│   ├── anime_background.gif     # Anime theme background
+│   ├── highschool_background.gif# Highschool theme background
+│   └── demo.gif                 # Auto-solver demo GIF
+├── styles/
+│   ├── general.css              # Base/reset styles
+│   ├── background.css           # Background GIF styling
+│   ├── menu.css                 # Main menu layout
+│   ├── form.css                 # Login/register forms
+│   ├── buttons.css              # Button styles
+│   ├── gameplay.css             # Game screen layout
+│   ├── tiles.css                # Puzzle tile styles
+│   ├── pause.css                # Pause menu overlay
+│   ├── victory.css              # Victory screen
+│   ├── audio_settings.css       # Volume slider and audio controls
+│   └── user_circle.css          # Beat-synced user circle
 ├── srcs/
-│   ├── main.js          # Global state management and themes
-│   ├── user.js          # Register/login, leaderboard and storage
-│   ├── game_setup.js    # Mode/difficulty selection and game start
-│   ├── puzzle.js        # Puzzle generation, rendering and validation
-│   ├── game_play.js     # Moves, scoring, victory and timers
-│   ├── utilities.js     # Utility functions (formats, pause, exit)
-│   ├── beat_sync.js     # Beat detection and user-circle animation
+│   ├── main.js                  # Global state management and themes
+│   ├── user.js                  # Register/login, leaderboard and storage
+│   ├── game_setup.js            # Mode/difficulty selection and game start
+│   ├── puzzle.js                # Puzzle generation, rendering and validation
+│   ├── game_play.js             # Moves, scoring, victory and timers
+│   ├── utilities.js             # Utility functions (formats, pause, exit)
+│   ├── beat_sync.js             # Beat detection and user-circle animation
 │   └── solve/
-│       ├── state_codec.js        # Bitpacking encode/decode helpers
-│       ├── heuristics.js         # Manhattan + Linear Conflict heuristic
-│       ├── min_heap.js           # Binary min-heap for the A* open set
-│       ├── solver_3x3.js         # A* solver for 3×3 puzzles
-│       ├── solver_6x6.js         # Reverse-history solver for 6×6 puzzles
-│       ├── auto_solve_runtime.js # Orchestrator + step animation
-│       └── audio_score.js        # Zen music playback and score helpers
-└── docs/README.docx     # Original document
+│       ├── state_codec.js       # Bitpacking encode/decode helpers
+│       ├── heuristics.js        # Manhattan + Linear Conflict heuristic
+│       ├── min_heap.js          # Binary min-heap for the A* open set
+│       ├── solver_3x3.js        # A* solver for 3×3 puzzles
+│       ├── solver_6x6.js        # Reverse-history solver for 6×6 puzzles
+│       ├── auto_solve_runtime.js# Orchestrator + step animation
+│       └── audio_score.js       # Zen music playback and score helpers
 ```
 
 ---
@@ -53,7 +79,7 @@ A web-based sliding puzzle (8/35 pieces) built purely with HTML5, CSS3 and Vanil
 
 1. Make sure you have a modern browser (Chrome, Edge, Firefox or similar).
 2. Download/clone the repository and keep the folder structure intact.
-3. Open `index.html` directly in the browser (double-click or *Open File*).
+3. Open `index.html` directly in the browser (double-click or _Open File_).
 4. Allow audio if the browser requests permission.
 
 > No external dependencies and no server required – everything runs client-side.
@@ -77,11 +103,11 @@ A web-based sliding puzzle (8/35 pieces) built purely with HTML5, CSS3 and Vanil
 
 ## Game modes
 
-| Mode | Objective | Scoring |
-|---|---|---|
-| **Classic** | Finish with the best possible score | −10 points per move |
-| **Zen** | Relax – a new puzzle is generated automatically after each solve | None |
-| **Time Attack** | Complete as many puzzles as possible in 170 seconds | Puzzle count |
+| Mode            | Objective                                                        | Scoring             |
+| --------------- | ---------------------------------------------------------------- | ------------------- |
+| **Classic**     | Finish with the best possible score                              | −10 points per move |
+| **Zen**         | Relax – a new puzzle is generated automatically after each solve | None                |
+| **Time Attack** | Complete as many puzzles as possible in 170 seconds              | Puzzle count        |
 
 ---
 
@@ -96,14 +122,14 @@ The user avatar circle visible during gameplay pulses in sync with the backgroun
    - **Bass energy** – the average amplitude of frequency bins 0–6 (~0–150 Hz), normalised to 0–1.
    - **Spectral flux** – the sum of all positive bin-level differences between the current and previous frame.
 3. A rolling history of the last ~43 flux samples (~0.7 s at 60 fps) is maintained. A **beat** is detected when the current flux exceeds 1.5× the rolling average and the minimum cooldown (200 ms) has elapsed.
-4. On a beat, the circle is slightly compressed (`scale < 1`) for ~60 ms and then eased back to normal. Between beats a gentle *breathing* effect driven by bass energy keeps the circle subtly alive.
+4. On a beat, the circle is slightly compressed (`scale < 1`) for ~60 ms and then eased back to normal. Between beats a gentle _breathing_ effect driven by bass energy keeps the circle subtly alive.
 5. A CSS ripple element expands and fades out on every beat, reinforcing the hit-circle feel.
 
 ---
 
 ## Auto-solver & Bitmasking
 
-![Auto-solver demo](Slidding%20puzzle%20definitive%20edition/imagens/demo.gif)
+![Auto-solver demo](imagens/demo.gif)
 
 The solver was fully rewritten and split into a dedicated `srcs/solve/` module. It now supports both puzzle sizes.
 

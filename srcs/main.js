@@ -16,7 +16,7 @@ let gameData = {
   gameStarted: false,
   puzzlesCompleted: 0,
   timeLimit: 170, // 2 minutes and 50 seconds
-  zenPlaylist: ["audios/zen1.mp3", "audios/zen2.mp3", "audios/zen3.mp3"],
+  zenPlaylist: ["audios/zen1.mp3"],
   zenMusicIndex: 0,
   zenMusicElement: null, // Audio element for Zen mode
   isAutoSolving: false,
